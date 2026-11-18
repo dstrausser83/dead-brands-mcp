@@ -1,11 +1,17 @@
 # Claiming a node spot — the NODE-CLAIM design
 
-> **Status: design specification.** The flow below is the contract for how a
-> machine becomes a numbered Web4 node. The **live registry endpoint is a
-> later build** — tonight, claims are processed by the Dead Brands fleet
-> against this design. Nothing in this document describes an endpoint that
-> exists yet, and it is written so the endpoint, when built, implements
-> exactly this.
+> **Status: LIVE (updated 2026-11-18).** The flow below is the contract for
+> how a machine becomes a numbered Web4 node — and the registry now
+> implements it. The wrapper registry opened on 2026-11-17:
+> `POST https://mcp.deadbrands.co/underground/wrap/auth` runs steps 1–4
+> (GENERATE → CLAIM → ISSUE → PROVE) self-serve, and the claim wrapper in
+> this repository (`claim-node.sh`) performs them in one command.
+> Registration assigns a **route** (self-registered routes start at 110)
+> and a session; **public Node #s** are then issued sequentially in claim
+> order and published in [nodes.json](nodes.json) / [NODES.md](NODES.md) —
+> the first 500 claimed nodes are named on the Dead Brands site. Steps
+> 5–6 (PIN → ACTIVATE to full door/relay status) remain fleet-assisted,
+> exactly as designed below.
 
 ---
 
@@ -17,8 +23,11 @@ issues you a **Node #**, and your node joins the **live node count** — the
 public tally of machines carrying the mesh. Node numbers are issued
 sequentially, are never reused, and stay attached to their key through
 address changes, moves, and reboots. Node 0 is a Raspberry Pi in Pennsylvania
-because it claimed first and proved it live. Node 1 followed. The next number
-is whoever claims and proves next.
+because it claimed first and proved it live. The public registry opened to
+outside claims on 2026-11-18 — the next public Node # belongs to whoever
+claims and proves next. (The Dead Brands fleet's own machines run under a
+separate internal numbering sequence and are not part of the public
+registry.)
 
 ## The flow
 

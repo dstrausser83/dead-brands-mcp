@@ -97,6 +97,11 @@ and the same scope gates.
 1. Guest calls **auth-start** with its **public key (hex form)**.
    - Unregistered key → `403 UNKNOWN_GUEST`. No challenge is issued; the
      registry is closed and the wrapper mints nothing and auto-registers nobody.
+   - *(Registry status update, 2026-11-18: the registry is now OPEN. A
+     well-formed key receives a challenge marked `self_register: true`;
+     completing the proof at auth-finish self-registers the key and
+     assigns it the next route, from 110 up. The closed-registry behavior
+     above describes the pre-open test period.)*
    - (Interop note: the registry matches the **hex** form of the key. Clients
      must send hex; base64 presentations are not normalized in v0.0001a.)
 2. Server returns a one-time **challenge** (single-use, 5-minute TTL) plus a
@@ -249,9 +254,9 @@ the migration per-route, not a flag day.
 Nodes join by claiming a spot in the registry — generate a keypair locally,
 register the public key, receive an issued Node #, complete the pinning
 exchange, and appear in the live node count. The full claim flow, registry
-fields, and node lifecycle are specified in **NODE-CLAIM.md**. (The live
-registry endpoint is a later build; the claim design in that document is the
-contract it will implement.)
+fields, and node lifecycle are specified in **NODE-CLAIM.md**. *(Status
+update, 2026-11-18: the registry endpoint is live and self-serve via the
+claim wrapper in this repository — see NODE-CLAIM.md's status note.)*
 
 ## 11. Honest limits of the proof of concept
 
